@@ -1,0 +1,133 @@
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <title>Addis topUp CSV</title>
+</head>
+<body>
+<div>
+    <form class="form-horizontal well">
+        <legend>
+            <h3>
+                <div id="title">Addis topUp CSV</div>
+            </h3>
+        </legend>
+        <fieldset>
+            <label for="csvFileInput"> <strong>CSV File:</strong>
+            </label>
+            <input type="file" id="csvFileInput" onchange="handleFiles(this.files)"
+                   accept=".csv">
+</div>
+</fieldset>
+</form>
+<div id="output">
+</div>
+</div>
+<br>
+<br>
+
+<!-- Le javascript
+  ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+<script type="text/javascript" src="scripts/script.js"></script>
+
+<script>
+    
+    const voucherCardSerials = "voucher_card_serials";
+
+    function handleFiles(files) {
+  // Check for the various File API support.
+  if (window.FileReader) {
+    // FileReader are supported.
+    getAsText(files[0]);
+  } else {
+    alert('FileReader are not supported in this browser.');
+  }
+}
+
+function getAsText(fileToRead) {
+  var reader = new FileReader();
+  // Handle errors load
+  reader.onload = loadHandler;
+  reader.onerror = errorHandler;
+  // Read file into memory as UTF-8      
+  reader.readAsText(fileToRead);
+}
+
+function loadHandler(event) {
+  var csv = event.target.result;
+  processData(csv);             
+}
+
+function processData(csv) {
+    var allTextLines = csv.split(/\n/);
+    var lines = [];
+    var state = false;
+    const PONumber = firebase.database().ref().child(voucherCardSerials).push().key;
+    while (allTextLines.length) {
+        lines.push(allTextLines.shift().split(':'));
+    }
+
+    for (var i = 0; i <= lines.length - 1; i++) {
+
+      if (!state) {
+
+        const begin = "Start_Sequence";
+        
+        if (lines[i][0] === begin) {
+            console.log(lines[i][1]);
+            state = true;
+        }else{
+            
+          console.log("Header\n"+lines[i][0]+"\t"+lines[i][1]);
+          firebase.database().ref().child(voucherCardSerials).child(PONumber).child(lines[i][0].trim()).set(lines[i][1].trim());
+        }
+      }else{
+        if (lines[i][0] !=  "[END]" && lines[i][0] != "[BEGIN]") {        
+          
+          if (lines[i][0] !="") {
+
+            var vouchers = [];
+            vouchers = lines[i][0].split(/ /);
+            if( vouchers[1] != null){
+                var serial = vouchers[0].trim();
+                var pin = vouchers[1].trim()
+                console.log("Serial\n"+serial);
+                console.log("Pin\n"+pin);
+                
+                writeVoucherRealData(serial,pin,PONumber);
+            }}
+          }
+      }
+    }
+  drawOutput(lines);
+}
+
+function writeVoucherRealData(serial,pin,po) {
+    const voucherSequence = "voucher_sequence";
+    firebase.database().ref(voucherCardSerials).child(po).child(voucherSequence).child(serial).set(pin);
+}
+
+function errorHandler(evt) {
+  if(evt.target.error.name == "NotReadableError") {
+    alert("Canno't read file !");
+  }
+}
+
+function drawOutput(lines){
+  //Clear previous data
+  document.getElementById("output").innerHTML = "";
+  var table = document.createElement("table");
+  for (var i = 0; i < lines.length; i++) {
+    var row = table.insertRow(-1);
+    for (var j = 0; j < lines[i].length; j++) {
+      var firstNameCell = row.insertCell(-1);
+      firstNameCell.appendChild(document.createTextNode(lines[i][j]));
+    }
+  }
+  document.getElementById("output").appendChild(table);
+}
+  
+</script>
+</body>
+</html>
