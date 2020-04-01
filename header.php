@@ -21,15 +21,15 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="https://addis.brootech.com/index.html">EVD Dashboard</a>
+            <a class="navbar-brand" href="https://addis.brootech.com/index.php">EVD Dashboard</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="https://addis.brootech.com/agents.html">Manage Agents</a></li>
-                <li><a href="https://addis.brootech.com/evs.html">Manage EVs</a></li>
+                <li><a href="https://addis.brootech.com/agents.php">Manage Agents</a></li>
+                <li><a href="https://addis.brootech.com/evs.php">Manage EVs</a></li>
                   <ul class="nav navbar-nav">
-                      <li><a href="https://addis.brootech.com/upload_evs.html">Upload EVs</a></li>
-                      <li><a href="https://addis.brootech.com/distribute_evs.html">Distribute EVs</a></li>
+                      <li><a href="https://addis.brootech.com/upload_evs.php">Upload EVs</a></li>
+                      <li><a href="https://addis.brootech.com/distribute_evs.php">Distribute EVs</a></li>
                   </ul>
                 <li><a href="#">Transactions</a></li>
                 <li><a href="#">Activity Log</a></li>
