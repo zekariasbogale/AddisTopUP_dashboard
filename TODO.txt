@@ -1,6 +1,5 @@
 // TODO lists for the back-end
 * Test uploading vouchers to the master voucher collection
-* Update UI to a minimum standard
 * Transfer vouchers from master voucher collection to distribuition batch
 * Update database for the last time & update dashboard features accordingly
 * Plan future updates from the dashboard perspective now
