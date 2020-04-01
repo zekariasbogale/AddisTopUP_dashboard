@@ -2,11 +2,10 @@
 
 <?php
 
-/**
-  * EVD Dashboard Landing Page Place Holder 
- */
+// EVD Dashboard Landing Page Place Holder 
 
-echo "EVD Dashboard Landing Page ... Click on either /"Upload EVs/" or /"Distribute EVs/""
+
+echo "EVD Dashboard Landing Page ... Click on either \"Upload EVs\" or \"Distribute EVs\""
 
 ?>
 
