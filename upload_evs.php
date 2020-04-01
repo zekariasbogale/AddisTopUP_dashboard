@@ -2,9 +2,7 @@
 
 <?php
 
-/**
-  * Uploading EVs in CSV format updated and maintained by Birhanu Hailemichael 
- */
+// Uploading EVs in CSV format updated and maintained by Birhanu Hailemichael
 
     <form class="form-horizontal well" action="test.php" method="post" enctype="multipart/form-data">
                 
